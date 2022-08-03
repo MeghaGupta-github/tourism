@@ -1,0 +1,297 @@
+
+
+
+<head>
+<link href='https://fonts.googleapis.com/css?family=Cedarville Cursive' rel='stylesheet'>
+<style>
+body {
+    font-family: 'Cedarville Cursive';font-size: 20px;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <p class="Logo">Incredible India!</p>
+    <input type="checkbox" name="" class="btn" />
+    <div class="nav">
+        <ol>
+            <link href='https://fonts.googleapis.com/css?family=Cedarville Cursive' rel='stylesheet'>
+<style>
+body {
+    font-family: 'Cedarville Cursive';font-size: 15px;
+}
+</style><li><a href="#">Home</a></li>
+            <li><a href="C:\Users\HP\Desktop\Tourism Website\aboutindia.html" target="_blank">About India</a></li>
+            <li><a href="C:\Users\HP\Desktop\Tourism Website\topdestinations.html" target="_blank">Best Destinations</a></li>
+            <li><a href="C:\Users\HP\Desktop\Tourism Website\serviceswidgets.html" target="_blank">Services</a></li>
+            <li><a href="C:\Users\HP\Desktop\Tourism Website\map.html" target="_blank">Help</a></li>
+        </ol>
+    </div>
+</header>
+<head>
+<style type="text/css">
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+header{
+    width: 100%;
+    height: 50px;
+    background: #F8F8F8;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.Logo{
+    color: rgb(44,44,44);
+    font-size: 1.5em;
+}
+.nav{
+    display: flex;
+    align-items: center;
+}
+.nav ol{
+    display: flex;
+    list-style: none;
+}
+.nnav ol li{margin: lem; }
+.nav ol li a{
+    text-decoration: none;
+    padding: 0.2em 1.2em 0.9em 1.2em;
+    border-radius: 10px 10px 0 0;
+    color: rgb(39,39,39);
+    transition: all .4s;
+    position: relative;
+    z-index: 1;
+}
+.nav ol li a::before{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 41px;
+    border-radius: 10px 10px 0 0;
+    background: #853333;
+    transform-origin: bottom;
+    background: linear-gradient(to right, #2C5364, #203A43, #0F2027 );
+    transform: scaleY(0.05);
+    z-index: -1;
+    transition: all .4s;
+}
+.nav ol li a:hover::before{ transform: scaleY(1.1); }
+.nav ol li a:hover{ color: white; }
+.btn{
+    position: relative;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    display: none;
+}
+.btn::before{
+    content: '\f0c9';
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-weight: 700;
+    font-size: 2em;
+}
+@media (max-width: 120px){
+    .btn{
+        display: flex;
+        z-index: 100;
+    }
+    header{
+        justify-content: space-between;
+        padding: 0 2em;
+    }
+    .nav{
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        background: #F8F8F8;
+        transform: translateY(-110%);
+        transition: all .4s;
+    }
+    input:checked ~ .nav{
+        transform: translateY(0%);
+    }
+    input:checked::before{
+        content= '\f00d';
+    }
+}
+@media (max-width: 700px){
+    .nav ol{
+        flex-direction: column;
+        text-align: center;
+    }
+}
+</style>
+</head>
+<canvas id="canvas"></canvas>
+<style type="text/css">
+body {
+	 background: #fff;
+	 margin: 0;
+	 min-height: 100vh;
+}
+ #canvas, #text {
+	 position: absolute;
+	 display: block;
+	 top: 0;
+	 left: 0;
+	 z-index: -1;
+}
+ #text {
+	 min-height: 100vh;
+	 width: 100vw;
+	 z-index: 1;
+	 color: #222;
+	 text-transform: uppercase;
+	 font-size: 8vmin;
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+	 text-align: center;
+}
+ #text h1 {
+	 opacity: 0.9;
+}
+ 
+}
+
+</style>
+<script language="Javascript">
+let resizeReset = function() {
+	w = canvasBody.width = window.innerWidth;
+	h = canvasBody.height = window.innerHeight;
+}
+
+const opts = { 
+	particleColor: "rgb(200,200,200)",
+	lineColor: "rgb(200,200,200)",
+	particleAmount: 30,
+	defaultSpeed: 1,
+	variantSpeed: 1,
+	defaultRadius: 2,
+	variantRadius: 2,
+	linkRadius: 200,
+};
+
+window.addEventListener("resize", function(){
+	deBouncer();
+});
+
+let deBouncer = function() {
+    clearTimeout(tid);
+    tid = setTimeout(function() {
+        resizeReset();
+    }, delay);
+};
+
+let checkDistance = function(x1, y1, x2, y2){ 
+	return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+};
+
+let linkPoints = function(point1, hubs){ 
+	for (let i = 0; i < hubs.length; i++) {
+		let distance = checkDistance(point1.x, point1.y, hubs[i].x, hubs[i].y);
+		let opacity = 1 - distance / opts.linkRadius;
+		if (opacity > 0) { 
+			drawArea.lineWidth = 0.5;
+			drawArea.strokeStyle = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${opacity})`;
+			drawArea.beginPath();
+			drawArea.moveTo(point1.x, point1.y);
+			drawArea.lineTo(hubs[i].x, hubs[i].y);
+			drawArea.closePath();
+			drawArea.stroke();
+		}
+	}
+}
+
+Particle = function(xPos, yPos){ 
+	this.x = Math.random() * w; 
+	this.y = Math.random() * h;
+	this.speed = opts.defaultSpeed + Math.random() * opts.variantSpeed; 
+	this.directionAngle = Math.floor(Math.random() * 360); 
+	this.color = opts.particleColor;
+	this.radius = opts.defaultRadius + Math.random() * opts. variantRadius; 
+	this.vector = {
+		x: Math.cos(this.directionAngle) * this.speed,
+		y: Math.sin(this.directionAngle) * this.speed
+	};
+	this.update = function(){ 
+		this.border(); 
+		this.x += this.vector.x; 
+		this.y += this.vector.y; 
+	};
+	this.border = function(){ 
+		if (this.x >= w || this.x <= 0) { 
+			this.vector.x *= -1;
+		}
+		if (this.y >= h || this.y <= 0) {
+			this.vector.y *= -1;
+		}
+		if (this.x > w) this.x = w;
+		if (this.y > h) this.y = h;
+		if (this.x < 0) this.x = 0;
+		if (this.y < 0) this.y = 0;	
+	};
+	this.draw = function(){ 
+		drawArea.beginPath();
+		drawArea.arc(this.x, this.y, this.radius, 0, Math.PI*2);
+		drawArea.closePath();
+		drawArea.fillStyle = this.color;
+		drawArea.fill();
+	};
+};
+
+function setup(){ 
+	particles = [];
+	resizeReset();
+	for (let i = 0; i < opts.particleAmount; i++){
+		particles.push( new Particle() );
+	}
+	window.requestAnimationFrame(loop);
+}
+
+function loop(){ 
+	window.requestAnimationFrame(loop);
+	drawArea.clearRect(0,0,w,h);
+	for (let i = 0; i < particles.length; i++){
+		particles[i].update();
+		particles[i].draw();
+	}
+	for (let i = 0; i < particles.length; i++){
+		linkPoints(particles[i], particles);
+	}
+}
+
+const canvasBody = document.getElementById("canvas"),
+drawArea = canvasBody.getContext("2d");
+let delay = 200, tid,
+rgb = opts.lineColor.match(/\d+/g);
+resizeReset();
+setup();
+</script>
+<body>
+<p><center><h1><img src="https://www.incredibleindia.org/content/dam/incredible-india-v2/images/inc-india-logo.svg"></h1></center></p>
+
+<center><video width="100%" height="100%" controls>
+  <source src="https://www.incredibleindia.org/content/dam/incredible-india-v2/video/original/indian_culture_1920_786.mp4" type="video/mp4">
+  <source src="https://www.incredibleindia.org/content/dam/incredible-india-v2/video/original/indian_culture_1920_786.mp4" type="video/ogg">
+  Your browser does not support the video tag.
+</video></center>
+
+</body>
+
+
+</html>
+
+
+

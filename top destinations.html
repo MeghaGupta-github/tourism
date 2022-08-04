@@ -1,0 +1,282 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<canvas id="canvas"></canvas>
+<style type="text/css">
+body {
+	 background: #fff;
+	 margin: 0;
+	 min-height: 100vh;
+	 font-family: Futura, sans-serif;
+}
+ #canvas, #text {
+	 position: absolute;
+	 display: block;
+	 top: 0;
+	 left: 0;
+	 z-index: -1;
+}
+ #text {
+	 min-height: 100vh;
+	 width: 100vw;
+	 z-index: 1;
+	 color: #222;
+	 text-transform: uppercase;
+	 font-size: 8vmin;
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+	 text-align: center;
+}
+ #text h1 {
+	 opacity: 0.9;
+}
+ 
+}
+
+</style>
+<script language="Javascript">
+let resizeReset = function() {
+	w = canvasBody.width = window.innerWidth;
+	h = canvasBody.height = window.innerHeight;
+}
+
+const opts = { 
+	particleColor: "rgb(200,200,200)",
+	lineColor: "rgb(200,200,200)",
+	particleAmount: 30,
+	defaultSpeed: 1,
+	variantSpeed: 1,
+	defaultRadius: 2,
+	variantRadius: 2,
+	linkRadius: 200,
+};
+
+window.addEventListener("resize", function(){
+	deBouncer();
+});
+
+let deBouncer = function() {
+    clearTimeout(tid);
+    tid = setTimeout(function() {
+        resizeReset();
+    }, delay);
+};
+
+let checkDistance = function(x1, y1, x2, y2){ 
+	return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+};
+
+let linkPoints = function(point1, hubs){ 
+	for (let i = 0; i < hubs.length; i++) {
+		let distance = checkDistance(point1.x, point1.y, hubs[i].x, hubs[i].y);
+		let opacity = 1 - distance / opts.linkRadius;
+		if (opacity > 0) { 
+			drawArea.lineWidth = 0.5;
+			drawArea.strokeStyle = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${opacity})`;
+			drawArea.beginPath();
+			drawArea.moveTo(point1.x, point1.y);
+			drawArea.lineTo(hubs[i].x, hubs[i].y);
+			drawArea.closePath();
+			drawArea.stroke();
+		}
+	}
+}
+
+Particle = function(xPos, yPos){ 
+	this.x = Math.random() * w; 
+	this.y = Math.random() * h;
+	this.speed = opts.defaultSpeed + Math.random() * opts.variantSpeed; 
+	this.directionAngle = Math.floor(Math.random() * 360); 
+	this.color = opts.particleColor;
+	this.radius = opts.defaultRadius + Math.random() * opts. variantRadius; 
+	this.vector = {
+		x: Math.cos(this.directionAngle) * this.speed,
+		y: Math.sin(this.directionAngle) * this.speed
+	};
+	this.update = function(){ 
+		this.border(); 
+		this.x += this.vector.x; 
+		this.y += this.vector.y; 
+	};
+	this.border = function(){ 
+		if (this.x >= w || this.x <= 0) { 
+			this.vector.x *= -1;
+		}
+		if (this.y >= h || this.y <= 0) {
+			this.vector.y *= -1;
+		}
+		if (this.x > w) this.x = w;
+		if (this.y > h) this.y = h;
+		if (this.x < 0) this.x = 0;
+		if (this.y < 0) this.y = 0;	
+	};
+	this.draw = function(){ 
+		drawArea.beginPath();
+		drawArea.arc(this.x, this.y, this.radius, 0, Math.PI*2);
+		drawArea.closePath();
+		drawArea.fillStyle = this.color;
+		drawArea.fill();
+	};
+};
+
+function setup(){ 
+	particles = [];
+	resizeReset();
+	for (let i = 0; i < opts.particleAmount; i++){
+		particles.push( new Particle() );
+	}
+	window.requestAnimationFrame(loop);
+}
+
+function loop(){ 
+	window.requestAnimationFrame(loop);
+	drawArea.clearRect(0,0,w,h);
+	for (let i = 0; i < particles.length; i++){
+		particles[i].update();
+		particles[i].draw();
+	}
+	for (let i = 0; i < particles.length; i++){
+		linkPoints(particles[i], particles);
+	}
+}
+
+const canvasBody = document.getElementById("canvas"),
+drawArea = canvasBody.getContext("2d");
+let delay = 200, tid,
+rgb = opts.lineColor.match(/\d+/g);
+resizeReset();
+setup();
+</script>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HTML Result</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" 
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container body-content">
+        
+
+
+
+<div class="container">
+
+
+                    <div class="row justify-content-start" style="padding-top:10px;">
+
+                <div class="col" style="padding-top:10px;">
+
+
+<img alt="Image html" width="90%" height="90%" style="max-height:500px;max-width:500px;" src="https://i.pinimg.com/736x/dd/df/44/dddf44eae24c93bafb90ace997e847c3.jpg" />
+
+
+                </div>
+                <div class="col" style="padding-top:10px;">
+
+                <div class="row justify-content-center" style="padding-top:10px;"><link href='https://fonts.googleapis.com/css?family=Cedarville Cursive' rel='stylesheet'>
+<style>
+body {
+    font-family: 'Cedarville Cursive';font-size: 22px;
+}
+</style>
+</head>
+<body>
+
+<h1>Taj Mahal</h1>
+
+
+
+                </div>
+                <div class="row justify-content-center" style="padding-top:10px;">
+<label>The Taj Mahal is an ivory-white marble mausoleum on the right bank of the river Yamuna in the Indian city of Agra.
+    <br />
+    Due to the global attention that it has received and the millions of visitors it attracts, the Taj Mahal has become a prominent image that is associated with India, and in this way has become a symbol of India itself.
+    <br />
+
+
+
+                </div>
+                </div>
+                </div>
+                <div class="row justify-content-center" style="padding-top:10px;">
+
+
+
+                </div>
+                <div class="row justify-content-start" style="padding-top:10px;">
+
+                <div class="col" style="padding-top:10px;">
+
+                <div class="row justify-content-center" style="padding-top:10px;">
+<h2>Varanasi</h2>
+
+
+
+                </div>
+                <div class="row justify-content-end" style="padding-top:10px;">
+<label>Varanasi is a city in Northern India also known as Benares or Kashi.
+    <br />
+    The city is one of the oldest continuously inhabited cities in the world and is not only the spiritual capital of India, but also the holiest of seven sacred cities in Hinduism, and it played a significant role in the development of Buddhism.
+    <br /></label>
+
+
+
+                </div>
+                </div>
+                <div class="col" style="padding-top:10px;">
+
+
+<img alt="Image html" width="90%" height="90%" style="max-height:500px;max-width:500px;" src="https://i.pinimg.com/474x/f1/a2/5e/f1a25ec57d22fbe8a8c72c8595a86737.jpg" />
+
+
+                </div>
+                </div>
+                <div class="row justify-content-center" style="padding-top:10px;">
+<p class="text-black-50">
+    
+                </div>
+                <div class="row justify-content-center" style="padding-top:10px;">
+
+
+
+                </div>
+                <div class="row justify-content-start" style="padding-top:10px;">
+
+                <div class="col" style="padding-top:10px;">
+
+
+<img alt="Image html" width="90%" height="90%" style="max-height:500px;max-width:500px;" src="https://i.pinimg.com/originals/7d/fc/c6/7dfcc69577cf1b3bf05620391e653a9b.jpg" />
+
+
+                </div>
+                <div class="col" style="padding-top:10px;">
+
+                <div class="row justify-content-center" style="padding-top:10px;">
+<h3>Golden Temple</h3>
+
+
+
+                </div>
+                <div class="row justify-content-center" style="padding-top:10px;">
+    The Golden Temple (also known as the Harmandir Sahib) is a gurdwara located in the city of Amritsar, Punjab, India.It is the preeminent spiritual site of Sikhism.
+    <br />
+    The man-made pool on the site of the temple was completed by the fourth Sikh Guru, Guru Ram Das, in 1577.
+    <br />
+    The Golden Temple is an open house of worship for all people, from all walks of life and faiths.
+</p>
+                </div>
+                </div>
+                </div>
+
+
+</div>
+
+
+
+    </div>
+</body>
+</html>
